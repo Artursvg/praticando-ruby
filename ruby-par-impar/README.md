@@ -1,14 +1,15 @@
 # Ruby Par ou Ímpar
 
-Programa de linha de comando em Ruby que recebe um número inteiro e informa se ele é **par** ou **ímpar**. Desenvolvido com **TDD** (Test-Driven Development) usando **RSpec**.
+Programa de linha de comando em Ruby que recebe números inteiros e informa se cada um é **par** ou **ímpar**. Desenvolvido com **TDD** (Test-Driven Development) usando **RSpec**.
 
 ## Objetivo
 
 Projeto de estudo para praticar:
 
-- Sintaxe básica de Ruby (classes, métodos, condicionais)
+- Sintaxe básica de Ruby (classes, métodos, condicionais, loops)
 - Testes automatizados com RSpec
 - Separação entre lógica de negócio e interface de terminal
+- Validação de entrada e tratamento de valores inválidos
 - Fluxo Red → Green → Refactor do TDD
 
 ## Pré-requisitos
@@ -33,9 +34,9 @@ rspec --init
 ```text
 ruby-par-impar/
 ├── bin/
-│   └── main.rb           # Entrada do programa (leitura e saída no terminal)
+│   └── main.rb           # Entrada do programa (leitura, validação e saída no terminal)
 ├── lib/
-│   └── par_impar.rb      # Lógica: verifica se um número é par ou ímpar
+│   └── par_impar.rb      # Lógica: verifica se um número é par, ímpar ou inválido
 ├── spec/
 │   ├── par_impar_spec.rb # Testes da classe ParImpar
 │   └── spec_helper.rb    # Configuração do RSpec
@@ -51,16 +52,40 @@ Na raiz do projeto:
 ruby bin/main.rb
 ```
 
-Exemplo de uso:
+O programa roda em loop: após cada resultado, você pode digitar outro número ou `sair` para encerrar.
+
+### Exemplo de uso
+
+Número par:
 
 ```text
 Digite um numero: 4
 o numero 4 é par
+Se quiser sair digite 'sair'
 ```
+
+Número ímpar:
 
 ```text
 Digite um numero: 7
 o numero 7 é impar
+Se quiser sair digite 'sair'
+```
+
+Número inválido (zero ou negativo):
+
+```text
+Digite um numero: 0
+0 não é permitido, digite outro numero: 4
+o numero 4 é par
+Se quiser sair digite 'sair'
+```
+
+Encerrar o programa:
+
+```text
+Se quiser sair digite 'sair'
+sair
 ```
 
 ## Como rodar os testes
@@ -79,10 +104,11 @@ rspec spec/par_impar_spec.rb
 
 A classe `ParImpar` expõe o método de classe `verificar(num)`, que:
 
-- retorna `"par"` quando o número é divisível por 2;
+- retorna `"inválido"` quando o número é menor ou igual a zero;
+- retorna `"par"` quando o número é par (usa o método `even?` do Ruby);
 - retorna `"impar"` nos demais casos.
 
-A verificação usa o operador de resto (`%`).
+A interface em `bin/main.rb` reutiliza essa lógica: se o resultado for `"inválido"`, o programa pede um novo número até receber um valor válido.
 
 ## Abordagem TDD
 
@@ -90,15 +116,22 @@ A verificação usa o operador de resto (`%`).
 2. **Green** — implementar o mínimo para o teste passar
 3. **Refactor** — melhorar o código sem quebrar os testes
 
-Os testes cobrem os casos básicos de número par (`2`) e ímpar (`3`). A interface de terminal (`bin/main.rb`) não é testada diretamente; ela reutiliza a lógica já validada em `lib/`.
+### Cobertura atual dos testes
+
+| Cenário              | Entrada | Resultado esperado |
+|----------------------|---------|--------------------|
+| Número par           | `2`     | `"par"`            |
+| Número ímpar         | `3`     | `"impar"`          |
+| Zero (inválido)      | `0`     | `"inválido"`       |
+
+A interface de terminal (`bin/main.rb`) não é testada diretamente; ela reutiliza a lógica já validada em `lib/`.
 
 ## Melhorias futuras (ideias de estudo)
 
-- Testar o caso `0` (par)
-- Testar números negativos
-- Validar entrada inválida (ex.: `"abc"`)
-- Refatorar usando `even?` / `odd?` do Ruby
-- Permitir verificar vários números em loop até o usuário sair
+- Testar números negativos explicitamente (ex.: `-2`, `-3`)
+- Validar entrada não numérica (ex.: `"abc"`) — hoje `gets.chomp.to_i` converte para `0`
+- Extrair a leitura e validação do terminal para uma classe separada (ex.: `CLI`)
+- Adicionar testes de integração para o fluxo interativo
 
 ## Referências úteis
 
