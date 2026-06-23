@@ -9,7 +9,7 @@ Projeto de estudo para praticar:
 - Sintaxe básica de Ruby (classes, métodos, condicionais, loops)
 - Testes automatizados com RSpec
 - Separação entre lógica de negócio e interface de terminal
-- Validação de entrada e tratamento de valores inválidos
+- Uso do método `even?` do Ruby (inclui zero e números negativos)
 - Fluxo Red → Green → Refactor do TDD
 
 ## Pré-requisitos
@@ -31,28 +31,32 @@ rspec --init
 
 ## Estrutura do projeto
 
+Este exercício fica dentro do repositório `praticando-ruby`:
+
 ```text
-ruby-par-impar/
-├── bin/
-│   └── main.rb           # Entrada do programa (leitura, validação e saída no terminal)
-├── lib/
-│   └── par_impar.rb      # Lógica: verifica se um número é par, ímpar ou inválido
-├── spec/
-│   ├── par_impar_spec.rb # Testes da classe ParImpar
-│   └── spec_helper.rb    # Configuração do RSpec
-├── .rspec                # Opções padrão do RSpec
-└── README.md
+praticando-ruby/
+└── ruby-par-impar/
+    ├── bin/
+    │   └── main.rb           # Entrada do programa (leitura e saída no terminal)
+    ├── lib/
+    │   └── par_impar.rb      # Lógica: verifica se um número é par ou ímpar
+    ├── spec/
+    │   ├── par_impar_spec.rb # Testes da classe ParImpar
+    │   └── spec_helper.rb    # Configuração do RSpec
+    ├── .rspec                # Opções padrão do RSpec
+    └── README.md
 ```
 
 ## Como executar
 
-Na raiz do projeto:
+Entre na pasta do projeto e rode:
 
 ```bash
+cd ruby-par-impar
 ruby bin/main.rb
 ```
 
-O programa roda em loop: após cada resultado, você pode digitar outro número ou `sair` para encerrar.
+O programa roda em loop: após cada resultado, pergunta se você deseja sair. Digite `s` para encerrar ou `n` para informar outro número.
 
 ### Exemplo de uso
 
@@ -61,7 +65,7 @@ Número par:
 ```text
 Digite um numero: 4
 o numero 4 é par
-Se quiser sair digite 'sair'
+Deseja sair? (s/n)
 ```
 
 Número ímpar:
@@ -69,26 +73,35 @@ Número ímpar:
 ```text
 Digite um numero: 7
 o numero 7 é impar
-Se quiser sair digite 'sair'
+Deseja sair? (s/n)
 ```
 
-Número inválido (zero ou negativo):
+Zero (par em Ruby):
 
 ```text
 Digite um numero: 0
-0 não é permitido, digite outro numero: 4
-o numero 4 é par
-Se quiser sair digite 'sair'
+o numero 0 é par
+Deseja sair? (s/n)
+```
+
+Número negativo:
+
+```text
+Digite um numero: -3
+o numero -3 é impar
+Deseja sair? (s/n)
 ```
 
 Encerrar o programa:
 
 ```text
-Se quiser sair digite 'sair'
-sair
+Deseja sair? (s/n)
+s
 ```
 
 ## Como rodar os testes
+
+Na pasta `ruby-par-impar`:
 
 ```bash
 rspec
@@ -104,11 +117,12 @@ rspec spec/par_impar_spec.rb
 
 A classe `ParImpar` expõe o método de classe `verificar(num)`, que:
 
-- retorna `"inválido"` quando o número é menor ou igual a zero;
 - retorna `"par"` quando o número é par (usa o método `even?` do Ruby);
 - retorna `"impar"` nos demais casos.
 
-A interface em `bin/main.rb` reutiliza essa lógica: se o resultado for `"inválido"`, o programa pede um novo número até receber um valor válido.
+Em Ruby, `even?` considera **zero** e **negativos** corretamente: `0.even?` é `true`, `-2.even?` é `true` e `-3.even?` é `false`.
+
+A interface em `bin/main.rb` apenas lê o número, chama `ParImpar.verificar` e exibe o resultado.
 
 ## Abordagem TDD
 
@@ -120,17 +134,18 @@ A interface em `bin/main.rb` reutiliza essa lógica: se o resultado for `"invál
 
 | Cenário              | Entrada | Resultado esperado |
 |----------------------|---------|--------------------|
-| Número par           | `2`     | `"par"`            |
-| Número ímpar         | `3`     | `"impar"`          |
-| Zero (inválido)      | `0`     | `"inválido"`       |
+| Número par positivo  | `2`     | `"par"`            |
+| Número ímpar positivo| `3`     | `"impar"`          |
+| Zero                 | `0`     | `"par"`            |
+| Número par negativo  | `-2`    | `"par"`            |
+| Número ímpar negativo| `-3`    | `"impar"`          |
 
 A interface de terminal (`bin/main.rb`) não é testada diretamente; ela reutiliza a lógica já validada em `lib/`.
 
 ## Melhorias futuras (ideias de estudo)
 
-- Testar números negativos explicitamente (ex.: `-2`, `-3`)
 - Validar entrada não numérica (ex.: `"abc"`) — hoje `gets.chomp.to_i` converte para `0`
-- Extrair a leitura e validação do terminal para uma classe separada (ex.: `CLI`)
+- Extrair a leitura do terminal para uma classe separada (ex.: `CLI`)
 - Adicionar testes de integração para o fluxo interativo
 
 ## Referências úteis
