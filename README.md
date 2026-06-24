@@ -103,7 +103,7 @@ rspec --version
 Clone o repositório (se ainda não tiver feito) e entre na pasta:
 
 ```bash
-git clone https://github.com/SEU_USUARIO/praticando-ruby.git
+git clone https://github.com/Artursvg/praticando-ruby.git
 cd praticando-ruby
 ```
 
