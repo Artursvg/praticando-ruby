@@ -10,6 +10,7 @@ Cada pasta na raiz é um **projeto independente** com sua própria estrutura (`l
 |---------|-----------|--------|
 | [ruby-par-impar](./ruby-par-impar/) | Verifica se um número inteiro é par ou ímpar | [README](./ruby-par-impar/README.md) |
 | [ruby-comparador](./ruby-comparador/) | Compara dois números e retorna o maior ou informa se são iguais | [README](./ruby-comparador/README.md) |
+| [ruby-calculadora](./ruby-calculadora/) | Realiza soma, subtração, multiplicação e divisão entre dois números | [README](./ruby-calculadora/README.md) |
 
 ## Ambiente de desenvolvimento
 
@@ -131,9 +132,14 @@ praticando-ruby/
 │   ├── lib/par_impar.rb
 │   ├── spec/
 │   └── README.md
-└── ruby-comparador/
+├── ruby-comparador/
+│   ├── bin/main.rb
+│   ├── lib/comparador.rb
+│   ├── spec/
+│   └── README.md
+└── ruby-calculadora/
     ├── bin/main.rb
-    ├── lib/comparador.rb
+    ├── lib/calculadora.rb
     ├── spec/
     └── README.md
 ```
@@ -169,6 +175,12 @@ rspec
 ruby bin/main.rb
 ```
 
+```bash
+cd ruby-calculadora
+rspec
+ruby bin/main.rb
+```
+
 ## Rodar todos os testes
 
 Na raiz do repositório, execute o RSpec em cada projeto:
@@ -176,6 +188,7 @@ Na raiz do repositório, execute o RSpec em cada projeto:
 ```bash
 cd ruby-par-impar && rspec && cd ..
 cd ruby-comparador && rspec && cd ..
+cd ruby-calculadora && rspec && cd ..
 ```
 
 ## O que cada exercício cobre
@@ -193,6 +206,14 @@ cd ruby-comparador && rspec && cd ..
 - Retorno de tipos diferentes (número inteiro ou string)
 - Interpolação de strings na saída
 - Validação de entrada (`s` / `n`) em loop
+
+### Ruby Calculadora
+
+- Operações aritméticas com `case`/`when`
+- Métodos de classe (`self.calcular`)
+- Hash para mapear opções do menu (`OPERADORES`)
+- Validação com `key?` e `include?` (sem encadear `||`)
+- Tratamento de divisão por zero
 
 ## Referências úteis
 
