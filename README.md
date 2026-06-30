@@ -11,6 +11,8 @@ Cada pasta na raiz é um **projeto independente** com sua própria estrutura (`l
 | [ruby-par-impar](./ruby-par-impar/) | Verifica se um número inteiro é par ou ímpar | [README](./ruby-par-impar/README.md) |
 | [ruby-comparador](./ruby-comparador/) | Compara dois números e retorna o maior ou informa se são iguais | [README](./ruby-comparador/README.md) |
 | [ruby-calculadora](./ruby-calculadora/) | Realiza soma, subtração, multiplicação e divisão entre dois números | [README](./ruby-calculadora/README.md) |
+| [ruby-classificador-idade](./ruby-classificador-idade/) | Classifica uma pessoa em faixa etária com base na idade informada | [README](./ruby-classificador-idade/README.md) |
+| [ruby-calculadora-imc](./ruby-calculadora-imc/) | Calcula o IMC e classifica o resultado em faixa de peso | [README](./ruby-calculadora-imc/README.md) |
 
 ## Ambiente de desenvolvimento
 
@@ -137,9 +139,19 @@ praticando-ruby/
 │   ├── lib/comparador.rb
 │   ├── spec/
 │   └── README.md
-└── ruby-calculadora/
+├── ruby-calculadora/
+│   ├── bin/main.rb
+│   ├── lib/calculadora.rb
+│   ├── spec/
+│   └── README.md
+├── ruby-classificador-idade/
+│   ├── bin/main.rb
+│   ├── lib/classificador_idade.rb
+│   ├── spec/
+│   └── README.md
+└── ruby-calculadora-imc/
     ├── bin/main.rb
-    ├── lib/calculadora.rb
+    ├── lib/imc.rb
     ├── spec/
     └── README.md
 ```
@@ -181,6 +193,18 @@ rspec
 ruby bin/main.rb
 ```
 
+```bash
+cd ruby-classificador-idade
+rspec
+ruby bin/main.rb
+```
+
+```bash
+cd ruby-calculadora-imc
+rspec
+ruby bin/main.rb
+```
+
 ## Rodar todos os testes
 
 Na raiz do repositório, execute o RSpec em cada projeto:
@@ -189,6 +213,8 @@ Na raiz do repositório, execute o RSpec em cada projeto:
 cd ruby-par-impar && rspec && cd ..
 cd ruby-comparador && rspec && cd ..
 cd ruby-calculadora && rspec && cd ..
+cd ruby-classificador-idade && rspec && cd ..
+cd ruby-calculadora-imc && rspec && cd ..
 ```
 
 ## O que cada exercício cobre
@@ -214,6 +240,20 @@ cd ruby-calculadora && rspec && cd ..
 - Hash para mapear opções do menu (`OPERADORES`)
 - Validação com `key?` e `include?` (sem encadear `||`)
 - Tratamento de divisão por zero
+
+### Ruby Classificador de Idade
+
+- Ranges do Ruby (`0..5`, `6..10`, etc.) com `case`/`when`
+- Método de classe (`self.classificar`)
+- Loop interativo com validação de entrada via array `INPUTS`
+
+### Ruby Calculadora de IMC
+
+- Cálculo com números decimais usando `to_f`
+- Dois métodos de classe com responsabilidades distintas (`calcular` e `classificar`)
+- Ranges decimais em `case`/`when`
+- Validação de entrada inválida (peso ou altura ≤ 0)
+- Arredondamento de resultado com `round(1)`
 
 ## Referências úteis
 
